@@ -1,21 +1,32 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 import sqlite3
 import os
 
 app = Flask(__name__)
 
-def fetch_games():
-    conn = sqlite3.connect('game.db')
+
+def fetch_games(db_name):
+    conn = sqlite3.connect(f'{db_name}.db')
     cursor = conn.cursor()
-    cursor.execute("SELECT Id, Name, Torrent, FromSource FROM game")
+    
+    if db_name == 'pc':
+     cursor.execute("SELECT Id, Name, Torrent, FromSource FROM game")
     games = cursor.fetchall()
+
+    if db_name == 'android':
+        cursor.execute("SELECT Id, Name, link FROM Games")
+        games = cursor.fetchall()
+    
     conn.close()
     return games
 
 @app.route('/')
 def index():
-    games = fetch_games()
-    return render_template('index.html', games=games)
+    db_name = request.args.get('db', 'pc')
+    if db_name not in ['pc', 'android']:
+        db_name = 'pc'
+    games = fetch_games(db_name)
+    return render_template('index.html', games=games, current_db=db_name)
 
 if __name__ == '__main__':
     # Listen on all network interfaces and use the port provided by the host

@@ -9,25 +9,53 @@
         <div class="title"><h1>The Cracked Paradise</h1></div>
         <input type="text" id="searchBar" placeholder="Search games...">
     </div>
-
-    <div class="fitgirlrepacks"><p><b>Games</b></p></div>
-
-    <div class="game-grid">
-        {% for id, name, torrent, source in games %}
-            <div class="game-block scroll-animate">
-                <img src="{{ url_for('static', filename='Images/' ~ id|string ~ '.png') }}" class="img1" alt="{{ name }}"><br>
-                <strong>{{ name }}</strong><br>
-                <a href="{{ torrent }}">Download</a><br>
-                <small>From: {{ source }}</small>
-            </div>
-        {% endfor %}
+    <div class="buttons"> 
+        <button class="button-sweep" onclick="loadgames('android')">Android</button>
+        <button class="button-sweep" onclick="loadgames('pc')">PC</button>
     </div>
+
+    {% if current_db == 'pc' %}
+        <div class="fitgirlrepacks"><p><b>Games for PC</b></p></div>
+        <div class="game-grid">
+            {% for id, name, torrent, source in games %}
+                <div class="game-block scroll-animate">
+                    <img src="{{ url_for('static', filename='Images/' ~ id|string ~ '.png') }}" class="img1" alt="{{ name }}"><br>
+                    <strong>{{ name }}</strong><br>
+                    <a href="{{ torrent }}">Download</a><br>
+                    <small>From: {{ source }}</small>
+                </div>
+            {% endfor %}
+        </div>
+    
+    {% elif current_db == 'android' %}
+        <div class="android"><p><b>&nbsp;Games & Apps for Android</b></p></div>
+        <div class="game-grid">
+            {% for id, name, link in games %}
+                <div class="game-block scroll-animate">
+                    <img src="{{ url_for('static', filename='Android_Images/' ~ id|string ~ '.png') }}" class="img1" alt="{{ name }}"><br>
+                    <strong>{{ name }}</strong><br>
+                    <a href="{{ link }}">Download</a><br>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 
     <div>
-       <p>&nbsp; Download My Torrent Downloader <a href = "https://drive.google.com/file/d/1RJ-KqzNDnZkPSjZPRNjVzq-yrPTXdSgg/view?usp=drive_linkflask">Click Here</a> </p> 
+        <p>&nbsp; Download My Torrent Downloader <a href="https://drive.google.com/file/d/1RJ-KqzNDnZkPSjZPRNjVzq-yrPTXdSgg/view?usp=drive_linkflask">Click Here</a></p> 
     </div>
-  <div class = "Fitgirl">&nbsp; This Website was made possible due to https://fitgirl-repacks.site/ <br> &nbsp; so if you like it please consider donating to Fitgirl for More awesome repacks Thanks for Visiting</div>
+
+    <div class="Fitgirl">
+        &nbsp; For installation in Android please use Zarchiver https://play.google.com/store/apps/details?id=ru.zdevs.zarchiver&hl=en_IN <br> 
+        &nbsp; This Website was made possible due to https://fitgirl-repacks.site/ <br>
+        &nbsp; So if you like it please consider donating to Fitgirl for more awesome repacks. Thanks for visiting!
+    </div>
+    
+
+    <script>
+        function loadgames(platform) {
+            window.location.href = "/?db=" + platform;
+        }
+    </script>
     <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">

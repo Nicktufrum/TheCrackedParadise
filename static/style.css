@@ -76,3 +76,56 @@
 .Fitgirl {
     display:flex;
 }
+.buttons {
+    display: flex;
+    justify-content: left;
+    margin-left:20px;
+    margin-top: 10px;
+    gap:10px;
+    font-family: 'Courier New', Courier, monospace;
+    transition-property: all;
+    transition-duration: 0.6s;
+    transition-timing-function: ease;
+
+}
+.button-sweep {
+  background: transparent;
+  border: 2px solid #00ffcc;
+  color: #00ffcc;
+  padding: 10px 25px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: color 0.4s ease-in-out, transform 0.1s ease;
+}
+
+.button-sweep::before {
+  content: "";
+  position: absolute;
+  background: #00ffcc;
+  height: 100%;
+  width: 0;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  transition: 0.4s ease-in-out;
+}
+
+.button-sweep:hover {
+  color: #000;
+}
+
+.button-sweep:hover::before {
+  width: 100%;
+}
+
+/* 🔥 Click Animation */
+.button-sweep:active {
+  transform: scale(0.95); /* press-in effect */
+}
+.button-sweep:hover {
+  color: #000;
+  box-shadow: 0 4px 15px rgba(0, 255, 204, 0.4);
+}
