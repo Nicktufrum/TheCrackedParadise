@@ -19,3 +19,11 @@ document.getElementById('searchBar').addEventListener('input', function () {
         block.style.display = name.includes(query) ? '' : 'none';
     });
 });
+
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        const splash = document.getElementById('splash');
+        splash.style.opacity = '0';
+        setTimeout(() => splash.style.display = 'none', 500);
+    }, 2500);
+});
