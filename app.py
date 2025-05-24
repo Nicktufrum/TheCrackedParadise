@@ -16,6 +16,10 @@ def fetch_games(db_name):
     if db_name == 'android':
         cursor.execute("SELECT Id, Name, link FROM Games")
         games = cursor.fetchall()
+
+    if db_name == 'programs':
+        cursor.execute("SELECT id, name, link FROM programs")
+        games = cursor.fetchall()
     
     conn.close()
     return games
@@ -23,7 +27,7 @@ def fetch_games(db_name):
 @app.route('/')
 def index():
     db_name = request.args.get('db', 'pc')
-    if db_name not in ['pc', 'android']:
+    if db_name not in ['pc', 'android', 'programs']:
         db_name = 'pc'
     games = fetch_games(db_name)
     return render_template('index.html', games=games, current_db=db_name)
